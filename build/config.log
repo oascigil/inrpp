@@ -1,4 +1,4 @@
-# project ns (3.23) configured on Sat Oct 24 14:21:38 2015 by
+# project ns (3.23) configured on Sat Oct 24 15:29:14 2015 by
 # waf 1.7.16 (abi 98, python 2070af0 on darwin)
 # using ./waf configure
 #
@@ -155,7 +155,7 @@ from /Users/uceeoas/Codes/temp/ns-3-inrpp/bindings/python: Test does not build: 
     raise Errors.BuildError(self.producer.error)
 BuildError: Build failed
  -> task in 'testprog' failed (exit status 1): 
-	{task 4508370832: cxxprogram test.cpp.1.o -> testprog}
+	{task 4440156048: cxxprogram test.cpp.1.o -> testprog}
 ['/opt/local/bin/g++', '-L/opt/local/lib', '-L/opt/local/lib', '-arch', 'x86_64', '-arch', 'i386', '-Wl,-F.', '-arch', 'x86_64', '-arch', 'i386', 'test.cpp.1.o', '-o', '/Users/uceeoas/Codes/temp/ns-3-inrpp/build/.conf_check_1f933b02106127ce3a9f4633a0e368e7/testbuild/testprog', '-L/System/Library/Frameworks/Python.framework/Versions/2.7/lib', '-lpython2.7']
 
 :-(
@@ -206,8 +206,8 @@ int main(int argc, char **argv)
 [2/2] [33mcxxprogram: build/.conf_check_9f22aca0d871aa3f9124d6da6fc5dbf1/testbuild/test.cpp.1.o -> build/.conf_check_9f22aca0d871aa3f9124d6da6fc5dbf1/testbuild/testprog
 [0m
 ['/opt/local/bin/g++', '-L/opt/local/lib', '-L/opt/local/lib', '-arch', 'x86_64', '-arch', 'i386', '-Wl,-F.', '-arch', 'x86_64', '-arch', 'i386', '-arch', 'x86_64', '-arch', 'i386', 'test.cpp.1.o', '-o', '/Users/uceeoas/Codes/temp/ns-3-inrpp/build/.conf_check_9f22aca0d871aa3f9124d6da6fc5dbf1/testbuild/testprog', '-framework', 'CoreFoundation', '-L/System/Library/Frameworks/Python.framework/Versions/2.7/lib', '-L/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/config', '-lpython2.7', '-ldl']
-err: ld: warning: ignoring file /opt/local/lib/libpython2.7.dylib, file was built for x86_64 which is not the architecture being linked (i386): /opt/local/lib/libpython2.7.dylib
-ld: warning: ignoring file /opt/local/lib/gcc47/libstdc++.dylib, file was built for x86_64 which is not the architecture being linked (i386): /opt/local/lib/gcc47/libstdc++.dylib
+err: ld: warning: ld: warning: ignoring file /opt/local/lib/libpython2.7.dylib, file was built for x86_64 which is not the architecture being linked (i386): /opt/local/lib/libpython2.7.dylibignoring file /opt/local/lib/gcc47/libstdc++.dylib, file was built for x86_64 which is not the architecture being linked (i386): /opt/local/lib/gcc47/libstdc++.dylib
+
 ld: warning: ignoring file /opt/local/lib/gcc47/libgcc_ext.10.5.dylib, missing required architecture i386 in file /opt/local/lib/gcc47/libgcc_ext.10.5.dylib (1 slices)
 ld: warning: ignoring file /opt/local/lib/gcc47/gcc/x86_64-apple-darwin14/4.7.4/libgcc.a, file was built for archive which is not the architecture being linked (i386): /opt/local/lib/gcc47/gcc/x86_64-apple-darwin14/4.7.4/libgcc.a
 Undefined symbols for architecture i386:
@@ -225,7 +225,7 @@ from /Users/uceeoas/Codes/temp/ns-3-inrpp/bindings/python: Test does not build: 
     raise Errors.BuildError(self.producer.error)
 BuildError: Build failed
  -> task in 'testprog' failed (exit status 1): 
-	{task 4509606160: cxxprogram test.cpp.1.o -> testprog}
+	{task 4441391376: cxxprogram test.cpp.1.o -> testprog}
 ['/opt/local/bin/g++', '-L/opt/local/lib', '-L/opt/local/lib', '-arch', 'x86_64', '-arch', 'i386', '-Wl,-F.', '-arch', 'x86_64', '-arch', 'i386', '-arch', 'x86_64', '-arch', 'i386', 'test.cpp.1.o', '-o', '/Users/uceeoas/Codes/temp/ns-3-inrpp/build/.conf_check_9f22aca0d871aa3f9124d6da6fc5dbf1/testbuild/testprog', '-framework', 'CoreFoundation', '-L/System/Library/Frameworks/Python.framework/Versions/2.7/lib', '-L/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/config', '-lpython2.7', '-ldl']
 
 Could not build a python embedded interpreter
@@ -356,7 +356,7 @@ from /Users/uceeoas/Codes/temp/ns-3-inrpp/src/core: Test does not build: Traceba
     raise Errors.BuildError(self.producer.error)
 BuildError: Build failed
  -> task in 'testprog' failed (exit status 1): 
-	{task 4509761616: cxx test.cpp -> test.cpp.1.o}
+	{task 4441542736: cxx test.cpp -> test.cpp.1.o}
 ['/opt/local/bin/g++', '-O0', '-ggdb', '-g3', '-Wall', '-Werror', '-DNS3_ASSERT_ENABLE', '-DNS3_LOG_ENABLE', '../test.cpp', '-c', '-o', 'test.cpp.1.o']
 
 not found
@@ -444,7 +444,7 @@ from /Users/uceeoas/Codes/temp/ns-3-inrpp/src/core: Test does not build: Traceba
     raise Errors.BuildError(self.producer.error)
 BuildError: Build failed
  -> task in 'testprog' failed (exit status 1): 
-	{task 4508369872: cxx test.cpp -> test.cpp.1.o}
+	{task 4440155216: cxx test.cpp -> test.cpp.1.o}
 ['/opt/local/bin/g++', '-O0', '-ggdb', '-g3', '-Wall', '-Werror', '-DNS3_ASSERT_ENABLE', '-DNS3_LOG_ENABLE', '-DHAVE___UINT128_T=1', '-DINT64X64_USE_128=1', '-DHAVE_STDINT_H=1', '-DHAVE_INTTYPES_H=1', '../test.cpp', '-c', '-o', 'test.cpp.1.o']
 
 not found
@@ -619,7 +619,7 @@ from /Users/uceeoas/Codes/temp/ns-3-inrpp/src/core: Test does not build: Traceba
     raise Errors.BuildError(self.producer.error)
 BuildError: Build failed
  -> task in 'testprog' failed (exit status 1): 
-	{task 4508396240: cxx test.cpp -> test.cpp.1.o}
+	{task 4441557712: cxx test.cpp -> test.cpp.1.o}
 ['/opt/local/bin/g++', '-O0', '-ggdb', '-g3', '-Wall', '-Werror', '-DNS3_ASSERT_ENABLE', '-DNS3_LOG_ENABLE', '-DHAVE___UINT128_T=1', '-DINT64X64_USE_128=1', '-DHAVE_SYS_TYPES_H=1', '-DHAVE_SYS_STAT_H=1', '-DHAVE_DIRENT_H=1', '-DHAVE_STDLIB_H=1', '-DHAVE_GETENV=1', '-DHAVE_SIGNAL_H=1', '-DHAVE_PTHREAD_H=1', '-DHAVE_STDINT_H=1', '-DHAVE_INTTYPES_H=1', '../test.cpp', '-c', '-o', 'test.cpp.1.o']
 
 not found
@@ -650,7 +650,7 @@ from /Users/uceeoas/Codes/temp/ns-3-inrpp/src/core: Test does not build: Traceba
     raise Errors.BuildError(self.producer.error)
 BuildError: Build failed
  -> task in 'testprog' failed (exit status 1): 
-	{task 4508369424: cxxprogram test.cpp.1.o -> testprog}
+	{task 4440581072: cxxprogram test.cpp.1.o -> testprog}
 ['/opt/local/bin/g++', '-L/opt/local/lib', '-L/opt/local/lib', 'test.cpp.1.o', '-o', '/Users/uceeoas/Codes/temp/ns-3-inrpp/build/.conf_check_5ef57bc0d8aa3565949b6ce1186fd4a7/testbuild/testprog', '-lrt']
 
 not found
@@ -733,7 +733,7 @@ from /Users/uceeoas/Codes/temp/ns-3-inrpp/src/fd-net-device: Test does not build
     raise Errors.BuildError(self.producer.error)
 BuildError: Build failed
  -> task in 'testprog' failed (exit status 1): 
-	{task 4509813136: cxx test.cpp -> test.cpp.1.o}
+	{task 4441541008: cxx test.cpp -> test.cpp.1.o}
 ['/opt/local/bin/g++', '-O0', '-ggdb', '-g3', '-Wall', '-Werror', '-DNS3_ASSERT_ENABLE', '-DNS3_LOG_ENABLE', '-DHAVE_SYS_IOCTL_H=1', '-DHAVE_IF_NETS_H=1', '-DHAVE_NET_ETHERNET_H=1', '../test.cpp', '-c', '-o', 'test.cpp.1.o']
 
 not found
@@ -762,7 +762,7 @@ from /Users/uceeoas/Codes/temp/ns-3-inrpp/src/fd-net-device: Test does not build
     raise Errors.BuildError(self.producer.error)
 BuildError: Build failed
  -> task in 'testprog' failed (exit status 1): 
-	{task 4509811216: cxx test.cpp -> test.cpp.1.o}
+	{task 4442726928: cxx test.cpp -> test.cpp.1.o}
 ['/opt/local/bin/g++', '-O0', '-ggdb', '-g3', '-Wall', '-Werror', '-DNS3_ASSERT_ENABLE', '-DNS3_LOG_ENABLE', '-DHAVE_SYS_IOCTL_H=1', '-DHAVE_IF_NETS_H=1', '-DHAVE_NET_ETHERNET_H=1', '../test.cpp', '-c', '-o', 'test.cpp.1.o']
 
 not found
@@ -803,7 +803,7 @@ from /Users/uceeoas/Codes/temp/ns-3-inrpp/src/tap-bridge: Test does not build: T
     raise Errors.BuildError(self.producer.error)
 BuildError: Build failed
  -> task in 'testprog' failed (exit status 1): 
-	{task 4508678800: cxx test.cpp -> test.cpp.1.o}
+	{task 4440154256: cxx test.cpp -> test.cpp.1.o}
 ['/opt/local/bin/g++', '-O0', '-ggdb', '-g3', '-Wall', '-Werror', '-DNS3_ASSERT_ENABLE', '-DNS3_LOG_ENABLE', '-DHAVE_SYS_IOCTL_H=1', '-DHAVE_IF_NETS_H=1', '-DHAVE_NET_ETHERNET_H=1', '-DHAVE_SQLITE3=1', '../test.cpp', '-c', '-o', 'test.cpp.1.o']
 
 not found

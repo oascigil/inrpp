@@ -43,7 +43,7 @@ InrppGlobalRoutingHelper::Copy (void) const
   return new InrppGlobalRoutingHelper (*this);
 }
 
-/*
+
 Ptr<Ipv4RoutingProtocol>
 InrppGlobalRoutingHelper::Create (Ptr<Node> node) const
 {
@@ -58,7 +58,7 @@ InrppGlobalRoutingHelper::Create (Ptr<Node> node) const
   globalRouter->SetRoutingProtocol (globalRouting);
 
   return globalRouting;
-}*/
+}
 
 
 void 
