@@ -410,7 +410,6 @@ InrppL3Protocol::Receive ( Ptr<NetDevice> device, Ptr<const Packet> p, uint16_t 
 void
 InrppL3Protocol::SetDetourRoute(Ptr<NetDevice> netdevice, Ptr<InrppRoute> route)
 {
-
 	Ptr<InrppInterface> iface = GetInterface(GetInterfaceForDevice (netdevice))->GetObject<InrppInterface>();
 	Ptr<InrppInterface> iface2 = GetInterface(GetInterfaceForDevice (route->GetOutputDevice()))->GetObject<InrppInterface>();
 	iface2->SetDetouredIface(iface,route->GetDestination());

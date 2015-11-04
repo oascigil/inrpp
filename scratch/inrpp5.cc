@@ -335,8 +335,8 @@ main (int argc, char *argv[])
   // Set the amount of data to send in bytes.  Zero is unlimited.
   source.SetAttribute ("MaxBytes", UintegerValue (maxBytes));
   ApplicationContainer sourceApps = source.Install (nodes.Get (5));
-  sourceApps.Start (Seconds (1.0));
-  sourceApps.Stop (Seconds (90.0));
+  //sourceApps.Start (Seconds (1.0)); //Onur
+  //sourceApps.Stop (Seconds (90.0));
 
   std::ostringstream oss1;
   oss1 << "node0.cwnd";

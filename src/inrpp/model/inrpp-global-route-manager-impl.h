@@ -77,7 +77,7 @@ public:
  * from each node exporting a GlobalRouter interface.
  */
  
-  //virtual void BuildGlobalRoutingDatabase ();
+  virtual void BuildGlobalRoutingDatabase ();
 
 /**
  * @brief Compute routes using a Dijkstra SPF computation and populate

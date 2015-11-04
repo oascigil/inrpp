@@ -52,7 +52,7 @@ void
 InrppGlobalRouteManager::BuildGlobalRoutingDatabase (void) 
 {
   NS_LOG_FUNCTION_NOARGS ();
-  SimulationSingleton<GlobalRouteManagerImpl>::Get ()->
+  SimulationSingleton<InrppGlobalRouteManagerImpl>::Get ()->
   BuildGlobalRoutingDatabase ();
 }
 

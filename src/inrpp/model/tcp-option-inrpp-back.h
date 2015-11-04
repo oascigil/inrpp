@@ -40,8 +40,8 @@ public:
    * \brief Get the type ID.
    * \return the object TypeId
    */
-  static TypeId GetTypeId (void);
-  virtual TypeId GetInstanceTypeId (void) const;
+  //static TypeId GetTypeId (void);
+  //virtual TypeId GetInstanceTypeId (void) const;
 
   virtual void Print (std::ostream &os) const;
   virtual void Serialize (Buffer::Iterator start) const;

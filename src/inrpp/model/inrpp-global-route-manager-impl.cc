@@ -61,7 +61,7 @@ InrppGlobalRouteManagerImpl::InrppGlobalRouteManagerImpl ()
 
 InrppGlobalRouteManagerImpl::~InrppGlobalRouteManagerImpl ()
 {
-  NS_LOG_FUNCTION (this);
+  //NS_LOG_FUNCTION (this);
 }
 
 
@@ -116,7 +116,7 @@ InrppGlobalRouteManagerImpl::DeleteGlobalRoutes ()
 // ultimately be computed.
 //
 
-/*
+///*
 void
 InrppGlobalRouteManagerImpl::BuildGlobalRoutingDatabase () 
 {
@@ -170,7 +170,7 @@ InrppGlobalRouteManagerImpl::BuildGlobalRoutingDatabase ()
     }
 
 }
-*/
+//*/
 
 //
 // For each node that is a global router (which is determined by the presence
@@ -439,75 +439,96 @@ InrppGlobalRouteManagerImpl::InrppSPFNext (SPFVertex* v, CandidateQueue& candida
 					// routerId is not a "real" IP address:
 					// it is just an identifier in the form of an IP address (e.g. 0.0.0.1)
 					// assigned to each router node
-                    Ipv4Address routerIdv = v->GetVertexId ();
-                    NodeList::Iterator i = NodeList::Begin (); 
-                    NodeList::Iterator listEnd = NodeList::End ();
+               Ipv4Address routerIdv = v->GetVertexId ();
+               NodeList::Iterator i = NodeList::Begin (); 
+               NodeList::Iterator listEnd = NodeList::End ();
 					Ptr<Node> v_node = NULL; 
 					for (; i != listEnd; i++)
 					  {
-						v_node = *i;
-						Ptr<GlobalRouter> rtr = v_node->GetObject<GlobalRouter> ();
-						if (rtr == 0)
-                          {
-                            NS_LOG_LOGIC ("No GlobalRouter interface on node " << 
-                            v_node->GetId ());
-                            continue;
-                          }
-                          if (rtr->GetRouterId () == routerIdv)
-						  	break;
+						 v_node = *i;
+						 Ptr<GlobalRouter> rtr = v_node->GetObject<GlobalRouter> ();
+						 if (rtr == 0)
+                     {
+                       NS_LOG_LOGIC ("No GlobalRouter interface on node " << 
+                       v_node->GetId ());
+                       continue;
+                     }
+                   if (rtr->GetRouterId () == routerIdv)
+						   {
+							  std::cout << "Router v is found in the NodeList\n";
+						  	  break;
+							}
 					  }
 					//2. Find the node corresponding to cw
-                    i = NodeList::Begin (); 
-                    Ipv4Address routerIdcw = cw->GetVertexId ();
+               i = NodeList::Begin (); 
+               Ipv4Address routerIdcw = cw->GetVertexId ();
 					Ptr<Node> cw_node = NULL; 
 					for (; i != listEnd; i++)
 					  {
 						cw_node = *i;
 						Ptr<GlobalRouter> rtr = cw_node->GetObject<GlobalRouter> ();
 						if (rtr == 0)
-                          {
-                            NS_LOG_LOGIC ("No GlobalRouter interface on node " << 
-                            cw_node->GetId ());
-                            continue;
-                          }
-                          if (rtr->GetRouterId () == routerIdcw)
-						  	break;
+                    {
+                      NS_LOG_LOGIC ("No GlobalRouter interface on node " << 
+                      cw_node->GetId ());
+                      continue;
+                    }
+                  if (rtr->GetRouterId () == routerIdcw)
+						  {
+							 std::cout << "Router cw is found in the NodeList\n";
+						  	 break;
+						  }
 					  }
 				   
 				   //3. Find the node corresponding to m_spfroot
+               i = NodeList::Begin (); 
 					Ptr<Node> spfroot_node = NULL; 
-                    Ipv4Address routerIdroot = m_spfroot->GetVertexId ();
+               Ipv4Address routerIdroot = m_spfroot->GetVertexId ();
 					for (; i != listEnd; i++)
 					  {
 						spfroot_node = *i;
 						Ptr<GlobalRouter> rtr = spfroot_node->GetObject<GlobalRouter> ();
 						if (rtr == 0)
-                          {
-                            NS_LOG_LOGIC ("No GlobalRouter interface on node " << 
-                            spfroot_node->GetId ());
-                            continue;
-                          }
-                          if (rtr->GetRouterId () == routerIdroot)
-						  	break;
+                    {
+                      NS_LOG_LOGIC ("No GlobalRouter interface on node " << 
+                      spfroot_node->GetId ());
+                      continue;
+                    }
+                  if (rtr->GetRouterId () == routerIdroot)
+						  {
+							 std::cout << "Router root is found in the NodeList\n";
+						  	 break;
+						  }
 					  }
-				   //Find the node corresponding to spfroot
-                   //Configure detour path at m_spfroot spfroot -> v has detour m_spfroot->cw->v
-                   Ptr<InrppL3Protocol> ip = spfroot_node->GetObject<InrppL3Protocol> ();
-                   Ptr<InrppRoute> rtentry = Create<InrppRoute> ();
-                   rtentry->SetDestination ( v->GetNextHop ()); //TODO add GetNextHop() to SPFVertex
-                   /// \todo handle multi-address case
-                   rtentry->SetDetour (cw->GetNextHop());
-				   //Find the NetDevice connecting spfroot to cw 
-                   uint32_t outif = cw->GetRootExitDirection().second;
-				   Ptr<NetDevice> root_to_cw_dev = cw_node->GetDevice(outif);
-                   rtentry->SetOutputDevice (root_to_cw_dev); //find the device which connects to cw
+					if(spfroot_node == NULL)
+					  std::cout << "In InrppSPFNext, spfrootnode is null\n\n";
 
-                   //outif = cw->GetRootExitDirection().second;
-				   Ptr<NetDevice> root_to_v_dev = v_node->GetDevice(outif);
-                   ip->SetDetourRoute(root_to_v_dev, rtentry); //find the device which connects to v
+				   //Find the node corresponding to spfroot
+               //Configure detour path at m_spfroot spfroot -> v has detour m_spfroot->cw->v
+               Ptr<InrppL3Protocol> ip = spfroot_node->GetObject<InrppL3Protocol> ();
+				   if(ip == NULL)
+					  std::cout << "In InrppSPFNext, ip is null\n\n";
+               Ptr<InrppRoute> rtentry = Create<InrppRoute> ();
+               rtentry->SetDestination ( v->GetNextHop ()); //TODO add GetNextHop() to SPFVertex
+               /// \todo handle multi-address case
+               rtentry->SetDetour (cw->GetNextHop());
+				   //Find the NetDevice connecting spfroot to cw 
+               uint32_t outif = cw->GetRootExitDirection().second;
+					std::cout << "Outif at line 507 is " << outif <<"\n\n";
+				   Ptr<NetDevice> root_to_cw_dev = spfroot_node->GetDevice(outif);
+					if(root_to_cw_dev == NULL)
+					  std::cout << "root_to_cw_dev is null\n\n";
+               rtentry->SetOutputDevice (root_to_cw_dev); //find the device which connects to cw
+
+               //outif = cw->GetRootExitDirection().second;
+               outif = v->GetRootExitDirection().second;
+				   Ptr<NetDevice> root_to_v_dev = spfroot_node->GetDevice(outif);
+					if(root_to_v_dev == NULL)
+						std::cout << "root_to_v_dev is null\n\n";
+               ip->SetDetourRoute(root_to_v_dev, rtentry); //find the device which connects to v
                   
 				   //Setup detour info message sending from the detour node (cw)
-                   Ptr<InrppL3Protocol> ip2 = cw_node->GetObject<InrppL3Protocol> ();
+               Ptr<InrppL3Protocol> ip2 = cw_node->GetObject<InrppL3Protocol> ();
 				   //Send the detour information of cw's interface (facing v) through cw's 
 				   //interface facing root. The IP nexthop address of the primary interface 
 				   //corresponding to the detour interface (cw's interface facing v) is also 
@@ -517,14 +538,14 @@ InrppGlobalRouteManagerImpl::InrppSPFNext (SPFVertex* v, CandidateQueue& candida
 				   GlobalRoutingLinkRecord *linkRemote = 0;
 				   //linkRemote is the link from w's perspective to v
 				   linkRemote = SPFGetNextLink(cw, v, linkRemote);
-                   Ptr<Ipv4> ipv4 = cw_node->GetObject<Ipv4> ();
-                   NS_ASSERT_MSG (ipv4, 
+               Ptr<Ipv4> ipv4 = cw_node->GetObject<Ipv4> ();
+               NS_ASSERT_MSG (ipv4, 
                          "GlobalRouteManagerImpl::FindOutgoingInterfaceId (): "
                          "GetObject for <Ipv4> interface failed");
 				   Ipv4Mask amask = Ipv4Mask ("255.255.255.255");
-                   int32_t interface = ipv4->GetInterfaceForPrefix (linkRemote->GetLinkData(), amask);
+               int32_t interface = ipv4->GetInterfaceForPrefix (linkRemote->GetLinkData(), amask);
 				   Ptr<NetDevice> cw_to_v_dev = cw_node->GetDevice(interface);
-				     //2. Get the NetDevice of cw adjacent to the root
+				   //2. Get the NetDevice of cw adjacent to the root
 				   linkRemote = 0;
 				   linkRemote = SPFGetNextLink(cw, m_spfroot, linkRemote);
 				   interface = ipv4->GetInterfaceForPrefix (linkRemote->GetLinkData(), amask);
@@ -532,7 +553,7 @@ InrppGlobalRouteManagerImpl::InrppSPFNext (SPFVertex* v, CandidateQueue& candida
 
 				   ip2->SendDetourInfo(cw_to_v_dev, cw_to_root_dev, v->GetNextHop () );
 				  }	
-				continue;
+				  continue;
             }
           else if (cw->GetDistanceFromRoot () == distance)
             {
@@ -982,6 +1003,9 @@ InrppGlobalRouteManagerImpl::InrppSPFCalculate (Ipv4Address root)
 // calculation.  Each router (and corresponding network) is a vertex in the
 // shortest path first (SPF) tree.
 //
+
+  if(!m_lsdb)
+    std::cout <<"m_lsdb null!\n";
   v = new SPFVertex (m_lsdb->GetLSA (root));
 // 
 // This vertex is the root of the SPF tree and it is distance 0 from the root.
