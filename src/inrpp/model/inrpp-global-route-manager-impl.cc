@@ -538,11 +538,14 @@ InrppGlobalRouteManagerImpl::InrppSPFNext (SPFVertex* v, CandidateQueue& candida
 				   GlobalRoutingLinkRecord *linkRemote = 0;
 				   //linkRemote is the link from w's perspective to v
 				   linkRemote = SPFGetNextLink(cw, v, linkRemote);
+					std::cout << "Link Remote: ";
+					linkRemote->GetLinkData().Print(std::cout);
+					std::cout << "\n";
                Ptr<Ipv4> ipv4 = cw_node->GetObject<Ipv4> ();
                NS_ASSERT_MSG (ipv4, 
                          "GlobalRouteManagerImpl::FindOutgoingInterfaceId (): "
                          "GetObject for <Ipv4> interface failed");
-				   Ipv4Mask amask = Ipv4Mask ("255.255.255.255");
+				   Ipv4Mask amask = Ipv4Mask ("255.255.255.0");
                int32_t interface = ipv4->GetInterfaceForPrefix (linkRemote->GetLinkData(), amask);
 				   Ptr<NetDevice> cw_to_v_dev = cw_node->GetDevice(interface);
 				   //2. Get the NetDevice of cw adjacent to the root
