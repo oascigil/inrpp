@@ -39,7 +39,7 @@ TcpOptionInrppBack::~TcpOptionInrppBack ()
 {
 }
 
-/*
+
 TypeId
 TcpOptionInrppBack::GetTypeId (void)
 {
@@ -55,7 +55,7 @@ TypeId
 TcpOptionInrppBack::GetInstanceTypeId (void) const
 {
   return GetTypeId ();
-}*/
+}
 
 void
 TcpOptionInrppBack::Print (std::ostream &os) const

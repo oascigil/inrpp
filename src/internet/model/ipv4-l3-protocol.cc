@@ -396,6 +396,8 @@ Ipv4L3Protocol::GetInterfaceForDevice (
        i != m_interfaces.end (); 
        i++, interface++)
     {
+	  NS_LOG_LOGIC("Device " << device);
+
       if ((*i)->GetDevice () == device)
         {
           return interface;

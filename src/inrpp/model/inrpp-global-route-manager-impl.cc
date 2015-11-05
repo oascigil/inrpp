@@ -544,14 +544,18 @@ InrppGlobalRouteManagerImpl::InrppSPFNext (SPFVertex* v, CandidateQueue& candida
                          "GetObject for <Ipv4> interface failed");
 				   Ipv4Mask amask = Ipv4Mask ("255.255.255.255");
                int32_t interface = ipv4->GetInterfaceForPrefix (linkRemote->GetLinkData(), amask);
+			   NS_LOG_LOGIC("Linkdata "<< linkRemote->GetLinkData() << " interface " << interface);
+
 				   Ptr<NetDevice> cw_to_v_dev = cw_node->GetDevice(interface);
 				   //2. Get the NetDevice of cw adjacent to the root
 				   linkRemote = 0;
 				   linkRemote = SPFGetNextLink(cw, m_spfroot, linkRemote);
-				   interface = ipv4->GetInterfaceForPrefix (linkRemote->GetLinkData(), amask);
+				   uint32_t interface2 = ipv4->GetInterfaceForPrefix (linkRemote->GetLinkData(), amask);
+				   NS_LOG_LOGIC("Linkdata "<< linkRemote->GetLinkData() << " interface " << interface);
+
 				   Ptr<NetDevice> cw_to_root_dev = cw_node->GetDevice(interface);
 
-				   ip2->SendDetourInfo(cw_to_v_dev, cw_to_root_dev, v->GetNextHop () );
+				   ip2->SendDetourInfo(interface, interface2, v->GetNextHop () );
 				  }	
 				  continue;
             }

@@ -74,7 +74,7 @@ public:
                 NetDevice::PacketType packetType);
 
   void SetDetourRoute(Ptr<NetDevice> netdevice, Ptr<InrppRoute> route);
-  void SendDetourInfo(Ptr<NetDevice> devSource, Ptr<NetDevice> devDestination, Ipv4Address infoAddress);
+  void SendDetourInfo(uint32_t sourceIface, uint32_t destIface, Ipv4Address address);
   void SendData (Ptr<Ipv4Route> rtentry, Ptr<const Packet> p);
   //void SetDetourRoute(Ipv4Address address, Ptr<InrppRoute> route);
   Ptr<InrppCache> GetCache();

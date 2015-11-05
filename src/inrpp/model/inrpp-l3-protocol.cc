@@ -418,12 +418,15 @@ InrppL3Protocol::SetDetourRoute(Ptr<NetDevice> netdevice, Ptr<InrppRoute> route)
 }
 
 void
-InrppL3Protocol::SendDetourInfo(Ptr<NetDevice> devSource, Ptr<NetDevice> devDestination, Ipv4Address address)
+InrppL3Protocol::SendDetourInfo(uint32_t sourceIface, uint32_t destIface, Ipv4Address address)
 {
-	int32_t interface = GetInterfaceForDevice (devSource);
-	NS_ASSERT (interface >= 0);
-	Ptr<InrppInterface> inrppInface = GetInterface (interface)->GetObject<InrppInterface>();
-	Simulator::Schedule (Seconds (1.0),&InrppL3Protocol::SendInrppInfo,this,inrppInface,devDestination,address);
+	//int32_t interface = GetInterfaceForDevice (devSource);
+	//NS_ASSERT (interface >= 0);
+	NS_LOG_LOGIC("Interface "<<  GetInterface (sourceIface) << " destiface " << GetInterface (destIface));
+
+	Ptr<InrppInterface> inrppInface = GetInterface (sourceIface)->GetObject<InrppInterface>();
+	NS_LOG_LOGIC("Interface "<< inrppInface);
+	Simulator::Schedule (Seconds (1.0),&InrppL3Protocol::SendInrppInfo,this,inrppInface,m_node->GetDevice(destIface),address);
 
 }
 
