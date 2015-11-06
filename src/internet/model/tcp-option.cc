@@ -22,7 +22,7 @@
 #include "tcp-option-rfc793.h"
 #include "tcp-option-winscale.h"
 #include "tcp-option-ts.h"
-#include "ns3/tcp-option-inrpp-back.h"
+#include "tcp-option-inrpp-back.h"
 #include "ns3/type-id.h"
 #include "ns3/log.h"
 
