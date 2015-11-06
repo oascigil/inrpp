@@ -21,6 +21,8 @@
 #include "inrpp-l3-protocol.h"
 #include <vector>
 #include <algorithm>
+
+#include "../../internet/model/tcp-option-inrpp-back.h"
 #include "inrpp-header.h"
 #include "ns3/packet.h"
 #include "ns3/log.h"
@@ -42,7 +44,6 @@
 #include "ns3/arp-header.h"
 #include "ns3/ipv4-raw-socket-impl.h"
 #include "inrpp-tag.h"
-#include "tcp-option-inrpp-back.h"
 
 namespace ns3 {
 

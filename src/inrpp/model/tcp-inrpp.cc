@@ -29,7 +29,7 @@
 #include "ns3/node.h"
 #include "ns3/packet.h"
 //#include "ns3/inrpp-backp-tag.h"
-#include "tcp-option-inrpp-back.h"
+#include "../../internet/model/tcp-option-inrpp-back.h"
 
 
 namespace ns3 {
