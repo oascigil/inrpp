@@ -413,6 +413,11 @@ InrppL3Protocol::SetDetourRoute(Ptr<NetDevice> netdevice, Ptr<InrppRoute> route)
 {
 	Ptr<InrppInterface> iface = GetInterface(GetInterfaceForDevice (netdevice))->GetObject<InrppInterface>();
 	Ptr<InrppInterface> iface2 = GetInterface(GetInterfaceForDevice (route->GetOutputDevice()))->GetObject<InrppInterface>();
+	if(iface2 == NULL)
+	{
+		std::cout << "iface2 is NULL in SetDetourRoute() \n";
+		return;
+	}
 	iface2->SetDetouredIface(iface,route->GetDestination());
 	iface2->SetDetour(route);
 

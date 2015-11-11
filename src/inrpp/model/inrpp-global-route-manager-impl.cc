@@ -503,8 +503,7 @@ InrppGlobalRouteManagerImpl::InrppSPFNext (SPFVertex* v, CandidateQueue& candida
 					if(spfroot_node == NULL)
 					  std::cout << "In InrppSPFNext, spfrootnode is null\n\n";
 
-				   //Find the node corresponding to spfroot
-               //Configure detour path at m_spfroot spfroot -> v has detour m_spfroot->cw->v
+               //***Configure detour path at m_spfroot spfroot -> v has detour m_spfroot->cw->v***//
                Ptr<InrppL3Protocol> ip = spfroot_node->GetObject<InrppL3Protocol> ();
 				   if(ip == NULL)
 					  std::cout << "In InrppSPFNext, ip is null\n\n";
@@ -514,7 +513,6 @@ InrppGlobalRouteManagerImpl::InrppSPFNext (SPFVertex* v, CandidateQueue& candida
                rtentry->SetDetour (cw->GetNextHop());
 				   //Find the NetDevice connecting spfroot to cw 
                uint32_t outif = cw->GetRootExitDirection().second;
-					std::cout << "Outif at line 507 is " << outif <<"\n\n";
 				   Ptr<NetDevice> root_to_cw_dev = spfroot_node->GetDevice(outif);
 					if(root_to_cw_dev == NULL)
 					  std::cout << "root_to_cw_dev is null\n\n";
@@ -525,6 +523,15 @@ InrppGlobalRouteManagerImpl::InrppSPFNext (SPFVertex* v, CandidateQueue& candida
 				   Ptr<NetDevice> root_to_v_dev = spfroot_node->GetDevice(outif);
 					if(root_to_v_dev == NULL)
 						std::cout << "root_to_v_dev is null\n\n";
+
+					std::cout << "Setting Detour Route: through root interface: ";
+					cw->GetRootExitDirection ().first.Print(std::cout);
+					std::cout << " to v: ";
+					v->GetNextHop ().Print (std::cout);
+					std:: cout << " through cw: ";
+					cw->GetNextHop ().Print (std::cout);
+					std::cout << "\n";
+
                ip->SetDetourRoute(root_to_v_dev, rtentry); //find the device which connects to v
                   
 				   //Setup detour info message sending from the detour node (cw)
@@ -536,11 +543,8 @@ InrppGlobalRouteManagerImpl::InrppSPFNext (SPFVertex* v, CandidateQueue& candida
 
 				     //1. Get the NetDevice of cw adjacent to v 
 				   GlobalRoutingLinkRecord *linkRemote = 0;
-				   //linkRemote is the link from w's perspective to v
+				   //linkRemote is the link from cw's perspective to v
 				   linkRemote = SPFGetNextLink(cw, v, linkRemote);
-					std::cout << "Link Remote: ";
-					linkRemote->GetLinkData().Print(std::cout);
-					std::cout << "\n";
                Ptr<Ipv4> ipv4 = cw_node->GetObject<Ipv4> ();
                NS_ASSERT_MSG (ipv4, 
                          "GlobalRouteManagerImpl::FindOutgoingInterfaceId (): "
@@ -549,16 +553,96 @@ InrppGlobalRouteManagerImpl::InrppSPFNext (SPFVertex* v, CandidateQueue& candida
                int32_t interface = ipv4->GetInterfaceForPrefix (linkRemote->GetLinkData(), amask);
 			   NS_LOG_LOGIC("Linkdata "<< linkRemote->GetLinkData() << " interface " << interface);
 
-				   Ptr<NetDevice> cw_to_v_dev = cw_node->GetDevice(interface);
+					std::cout << "Setting Detour Src interface: ";
+					linkRemote->GetLinkData().Print(std::cout);
+					
+				   //Ptr<NetDevice> cw_to_v_dev = cw_node->GetDevice(interface);
 				   //2. Get the NetDevice of cw adjacent to the root
 				   linkRemote = 0;
 				   linkRemote = SPFGetNextLink(cw, m_spfroot, linkRemote);
-				   uint32_t interface2 = ipv4->GetInterfaceForPrefix (linkRemote->GetLinkData(), amask);
+				   int32_t interface2 = ipv4->GetInterfaceForPrefix (linkRemote->GetLinkData(), amask);
 				   NS_LOG_LOGIC("Linkdata "<< linkRemote->GetLinkData() << " interface " << interface);
 
-				   Ptr<NetDevice> cw_to_root_dev = cw_node->GetDevice(interface);
+				   //Ptr<NetDevice> cw_to_root_dev = cw_node->GetDevice(interface);
+					std::cout << " and Dst interface: ";
+					linkRemote->GetLinkData().Print(std::cout);
+					std::cout << "\n";
 
+					
 				   ip2->SendDetourInfo(interface, interface2, v->GetNextHop () );
+					
+					//* **Configure detour path at m_spfroot spfroot -> cw has detour m_spfroot->v->cw
+               //ip = spfroot_node->GetObject<InrppL3Protocol> ();
+				   //if(ip == NULL)
+					//  std::cout << "In InrppSPFNext, ip is null\n\n";
+               rtentry = Create<InrppRoute> ();
+               rtentry->SetDestination ( cw->GetNextHop ()); //TODO add GetNextHop() to SPFVertex
+               /// \todo handle multi-address case
+               rtentry->SetDetour (v->GetNextHop());
+				   //Find the NetDevice connecting spfroot to cw 
+               //outif = v->GetRootExitDirection().second;
+				   //root_to_v_dev = spfroot_node->GetDevice(outif);
+					//if(root_to_v_dev == NULL)
+					//  std::cout << "root_to_v_dev is null\n\n";
+               rtentry->SetOutputDevice (root_to_v_dev); //find the device which connects to cw
+/*
+					Ipv4Address addr = Ipv4Address::ConvertFrom(root_to_v_dev->GetAddress ());
+					if(addr !=NULL)
+					{
+						std::cout << "Root to v dev IP addr is: ";
+						addr.Print (std::cout);
+					}
+*/
+               //outif = cw->GetRootExitDirection().second;
+				   //root_to_cw_dev = spfroot_node->GetDevice(outif);
+					//if(root_to_cw_dev == NULL)
+					//	std::cout << "root_to_v_dev is null\n\n";
+					
+					std::cout << "Setting Detour Route: through root interface: ";
+					v->GetRootExitDirection ().first.Print(std::cout);
+					std::cout << " to cw: ";
+					cw->GetNextHop ().Print (std::cout);
+					std:: cout << " through v: ";
+					v->GetNextHop ().Print (std::cout);
+					std::cout << "\n"; 
+
+               ip->SetDetourRoute(root_to_cw_dev, rtentry); //find the device which connects to v
+                  
+				   //Setup detour info message sending from the detour node (v)
+               ip2 = v_node->GetObject<InrppL3Protocol> ();
+				   //Send the detour information of v's interface (facing cw) through v's 
+				   //interface facing root. The IP nexthop address of the primary interface 
+				   //corresponding to the detour interface (v's interface facing cw) is also 
+				   //passed as a parameter 
+
+				     //1. Get the NetDevice of v adjacent to cw 
+				   linkRemote = 0;
+				   linkRemote = SPFGetNextLink(v, cw, linkRemote);
+               ipv4 = v_node->GetObject<Ipv4> ();
+               NS_ASSERT_MSG (ipv4, 
+                         "GlobalRouteManagerImpl::FindOutgoingInterfaceId (): "
+                         "GetObject for <Ipv4> interface failed");
+				   amask = Ipv4Mask ("255.255.255.0");
+               interface = ipv4->GetInterfaceForPrefix (linkRemote->GetLinkData(), amask);
+			      NS_LOG_LOGIC("Linkdata "<< linkRemote->GetLinkData() << " interface " << interface);
+
+					std::cout << "Setting Detour Src interface: ";
+					linkRemote->GetLinkData().Print(std::cout);
+
+				   //Ptr<NetDevice> v_to_cw_dev = v_node->GetDevice(interface);
+				   //2. Get the NetDevice of v adjacent to the root
+				   linkRemote = 0;
+				   linkRemote = SPFGetNextLink(v, m_spfroot, linkRemote);
+				   interface2 = ipv4->GetInterfaceForPrefix (linkRemote->GetLinkData(), amask);
+				   NS_LOG_LOGIC("Linkdata "<< linkRemote->GetLinkData() << " interface " << interface);
+
+					std::cout << " and Dst interface: ";
+					linkRemote->GetLinkData().Print(std::cout);
+					std::cout << "\n";
+
+				   ip2->SendDetourInfo(interface, interface2, cw->GetNextHop () ); //*/
+					
+					std::cout << "DONE\n\n";
 				  }	
 				  continue;
             }

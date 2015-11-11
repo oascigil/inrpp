@@ -461,11 +461,9 @@ void
 GlobalRouteManagerLSDB::Initialize ()
 {
   NS_LOG_FUNCTION (this);
-  std::cout << "In GlobalRouteManagerLSDB::Initialize \n\n";
   LSDBMap_t::iterator i;
   for (i= m_database.begin (); i!= m_database.end (); i++)
     {
-	   std::cout << "In GlobalRouteManagerLSDB::Initialize loop \n\n";
       GlobalRoutingLSA* temp = i->second;
       temp->SetStatus (GlobalRoutingLSA::LSA_SPF_NOT_EXPLORED);
     }
@@ -476,18 +474,12 @@ GlobalRouteManagerLSDB::Insert (Ipv4Address addr, GlobalRoutingLSA* lsa)
 {
   NS_LOG_FUNCTION (this << addr << lsa);
 
-  std::cout << "In GlobalRouteManagerLSDB::Insert, addr: ";
-  addr.Print(std::cout);
-  std::cout << "\n";
-
   if (lsa->GetLSType () == GlobalRoutingLSA::ASExternalLSAs) 
     {
-      std::cout << "In GlobalRouteManagerLSDB::Insert, lsa type GlobalRoutingLSA::ASExternalLSAs \n";
       m_extdatabase.push_back (lsa);
     } 
   else
     {
-      std::cout << "In GlobalRouteManagerLSDB::Insert, lsa type other \n";
       m_database.insert (LSDBPair_t (addr, lsa));
     }
 }
@@ -513,9 +505,6 @@ GlobalRouteManagerLSDB::GetLSA (Ipv4Address addr) const
 //
 // Look up an LSA by its address.
 //
-  std::cout << "Address: \n";
-  addr.Print(std::cout);
-  std::cout << "Address printed \n";
   LSDBMap_t::const_iterator i;
   for (i= m_database.begin (); i!= m_database.end (); i++)
     {
@@ -564,7 +553,6 @@ GlobalRouteManagerImpl::GlobalRouteManagerImpl ()
 {
   NS_LOG_FUNCTION (this);
   m_lsdb = new GlobalRouteManagerLSDB ();
-  std::cout << "GlobalRouteManagerImpl constructor\n";
 }
 
 GlobalRouteManagerImpl::~GlobalRouteManagerImpl ()
